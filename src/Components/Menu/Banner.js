@@ -1,7 +1,5 @@
-"use strict";
-
 import styled from "styled-components";
-import Banner from "../images/banner.png";
+import Banner from "../../images/banner.png";
 
 export const BannerMenu = styled.div`
   height: 250px;

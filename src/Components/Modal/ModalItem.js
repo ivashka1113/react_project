@@ -1,5 +1,3 @@
-"use strict";
-
 import React from "react";
 import styled from "styled-components";
 import { ModalButton } from "./ModalButton";
@@ -40,18 +38,21 @@ const Banner = styled.div`
   margin-bottom: 20px;
 `;
 
-export const ModalItem = ({ openItem, setOpenItem }) => {
+export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const closeModal = (e) => {
     if (e.target.id === "overlay") {
       setOpenItem(null);
     }
   };
 
-  const showMessage = (e) => {
-    alert("Сработало");
+  const order = {
+    ...openItem,
   };
 
-  if (!openItem) return null;
+  const addToOrder = () => {
+    setOrders([...orders, order]);
+    setOpenItem(null);
+  };
 
   return (
     <Overlay id="overlay" onClick={closeModal}>
@@ -61,7 +62,7 @@ export const ModalItem = ({ openItem, setOpenItem }) => {
           <p>{openItem.name}</p>
           <p>{openItem.price}</p>
         </ModalInfo>
-        <ModalButton onClickHandler={showMessage} />
+        <ModalButton onClickHandler={addToOrder} />
       </ModalStyled>
     </Overlay>
   );
