@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { ModalButton } from "./ModalButton";
+import { CountItem } from "./CountItem";
+import { useCount } from "../Hooks/useCount";
+import { formatCurrency } from "../Functions/secondoryFunction";
 
 const ModalInfo = styled.div`
   display: flex;
   font-family: Pacifico, sans-serif;
-  margin: 20px 53px 20px 37px;
   justify-content: space-between;
+  margin: 20px 53px 20px 37px;
 `;
 
 const Overlay = styled.div`
@@ -38,7 +41,17 @@ const Banner = styled.div`
   margin-bottom: 20px;
 `;
 
+const TotalPriceItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 53px 20px 37px;
+`;
+
+export const totalPriceItems = (order) => order.price * order.count;
+
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
+  const counter = useCount();
+
   const closeModal = (e) => {
     if (e.target.id === "overlay") {
       setOpenItem(null);
@@ -47,6 +60,7 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
   const order = {
     ...openItem,
+    count: counter.count,
   };
 
   const addToOrder = () => {
@@ -62,6 +76,11 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
           <p>{openItem.name}</p>
           <p>{openItem.price}</p>
         </ModalInfo>
+        <CountItem {...counter} />
+        <TotalPriceItem>
+          <span>Стоимость:</span>
+          <span>{formatCurrency(totalPriceItems(order))}</span>
+        </TotalPriceItem>
         <ModalButton onClickHandler={addToOrder} />
       </ModalStyled>
     </Overlay>
