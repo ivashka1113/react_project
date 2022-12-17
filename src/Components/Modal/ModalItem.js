@@ -3,13 +3,21 @@ import styled from "styled-components";
 import { ModalButton } from "./ModalButton";
 import { CountItem } from "./CountItem";
 import { useCount } from "../Hooks/useCount";
-import { formatCurrency } from "../Functions/secondoryFunction";
+import {
+  formatCurrency,
+  totalPriceItems,
+} from "../Functions/secondoryFunction";
+import { Topings } from "./Topings";
+import { useToppings } from "../Hooks/useToppings";
 
 const ModalInfo = styled.div`
   display: flex;
   font-family: Pacifico, sans-serif;
   justify-content: space-between;
-  margin: 20px 53px 20px 37px;
+`;
+
+const Wrapper = styled.div`
+  padding: 20px 53px 20px 37px;
 `;
 
 const Overlay = styled.div`
@@ -44,13 +52,11 @@ const Banner = styled.div`
 const TotalPriceItem = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 20px 53px 20px 37px;
 `;
-
-export const totalPriceItems = (order) => order.price * order.count;
 
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const counter = useCount();
+  const toppings = useToppings(openItem);
 
   const closeModal = (e) => {
     if (e.target.id === "overlay") {
@@ -61,6 +67,7 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
   const order = {
     ...openItem,
     count: counter.count,
+    topping: toppings.toppings,
   };
 
   const addToOrder = () => {
@@ -72,16 +79,19 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
     <Overlay id="overlay" onClick={closeModal}>
       <ModalStyled>
         <Banner img={openItem.img} />
-        <ModalInfo>
-          <p>{openItem.name}</p>
-          <p>{openItem.price}</p>
-        </ModalInfo>
-        <CountItem {...counter} />
-        <TotalPriceItem>
-          <span>Стоимость:</span>
-          <span>{formatCurrency(totalPriceItems(order))}</span>
-        </TotalPriceItem>
-        <ModalButton onClickHandler={addToOrder} />
+        <Wrapper>
+          <ModalInfo>
+            <p>{openItem.name}</p>
+            <p>{formatCurrency(openItem.price)}</p>
+          </ModalInfo>
+          <CountItem {...counter} />
+          {openItem.toppings && <Topings {...toppings} />}
+          <TotalPriceItem>
+            <span>Стоимость:</span>
+            <span>{formatCurrency(totalPriceItems(order))}</span>
+          </TotalPriceItem>
+          <ModalButton onClickHandler={addToOrder} />
+        </Wrapper>
       </ModalStyled>
     </Overlay>
   );

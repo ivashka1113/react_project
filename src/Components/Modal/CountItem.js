@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const CountWrapper = styled.div`
   display: flex;
-  margin: 20px 53px 20px 37px;
+  margin: 20px 0px;
   justify-content: space-between;
 `;
 
