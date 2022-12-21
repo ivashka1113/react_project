@@ -45,7 +45,7 @@ const ToppingItem = styled.div`
   margin-right: 5px;
 `;
 
-export const OrderListItem = ({ order }) => {
+export const OrderListItem = ({ order, setOrders, deleteItem }) => {
   const checkedToppings =
     order.topping &&
     order.topping
@@ -56,7 +56,7 @@ export const OrderListItem = ({ order }) => {
   return (
     <OrderItemStyled>
       <ItemName>
-        {order.name}
+        {order.name} {order.choices}
         {checkedToppings && (
           <ToppingsStyled>
             <ToppingItem>

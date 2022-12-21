@@ -51,7 +51,7 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders }) => {
+export const Order = ({ orders, onChange, deleteItem }) => {
   const total = orders.reduce((result, order) => {
     return (result = totalPriceItems(order) + +result);
   }, 0);
@@ -67,7 +67,12 @@ export const Order = ({ orders }) => {
         {orders.length ? (
           <OrderList>
             {orders.map((order) => (
-              <OrderListItem order={order} />
+              <OrderListItem
+                order={order}
+                orders={orders}
+                onChange={onChange}
+                deleteItem={deleteItem}
+              />
             ))}
           </OrderList>
         ) : (
