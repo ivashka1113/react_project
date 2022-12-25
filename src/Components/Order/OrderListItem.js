@@ -21,10 +21,16 @@ const TrashButton = styled.button`
 const OrderItemStyled = styled.li`
   display: flex;
   margin: 15px 0px;
+  justify-content: space-between;
+`;
+
+const OrderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const ItemName = styled.span`
-  flex-grow: 1;
+  width: 186px;
 `;
 
 const ItemPrice = styled.span`
@@ -45,7 +51,7 @@ const ToppingItem = styled.div`
   margin-right: 5px;
 `;
 
-export const OrderListItem = ({ order, setOrders, deleteItem }) => {
+export const OrderListItem = ({ order, index, deleteItem, setOpenItem }) => {
   const checkedToppings =
     order.topping &&
     order.topping
@@ -55,21 +61,24 @@ export const OrderListItem = ({ order, setOrders, deleteItem }) => {
       .toLowerCase();
   return (
     <OrderItemStyled>
-      <ItemName>
-        {order.name} {order.choices}
-        {checkedToppings && (
-          <ToppingsStyled>
-            <ToppingItem>
-              {checkedToppings.length > 25
-                ? checkedToppings.substring(0, 25) + "..."
-                : checkedToppings}
-            </ToppingItem>
-          </ToppingsStyled>
-        )}
-      </ItemName>
-      <span>{order.count}</span>
-      <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
-      <TrashButton />
+      <OrderWrapper onClick={() => setOpenItem({ ...order, index })}>
+        <ItemName>
+          {order.name} {order.choices}
+          {checkedToppings && (
+            <ToppingsStyled>
+              <ToppingItem>
+                {checkedToppings.length > 25
+                  ? checkedToppings.substring(0, 25) + "..."
+                  : checkedToppings}
+              </ToppingItem>
+            </ToppingsStyled>
+          )}
+        </ItemName>
+        <span>{order.count}</span>
+        <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
+      </OrderWrapper>
+
+      <TrashButton onClick={() => deleteItem(index)} />
     </OrderItemStyled>
   );
 };

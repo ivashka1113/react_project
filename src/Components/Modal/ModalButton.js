@@ -27,10 +27,10 @@ const ModalButtonStyled = styled.button`
   }
 `;
 
-export const ModalButton = ({ onClickHandler, disabled }) => {
+export const ModalButton = ({ onClickHandler, disabled, name }) => {
   return (
     <ModalButtonStyled onClick={onClickHandler} disabled={disabled}>
-      Добавить
+      {name}
     </ModalButtonStyled>
   );
 };

@@ -51,7 +51,15 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders, onChange, deleteItem }) => {
+export const Order = ({ orders, setOrders, setOpenItem }) => {
+  const deleteItem = (index) => {
+    const newOrders = [...orders];
+
+    newOrders.splice(index, 1);
+
+    setOrders(newOrders);
+  };
+
   const total = orders.reduce((result, order) => {
     return (result = totalPriceItems(order) + +result);
   }, 0);
@@ -66,12 +74,13 @@ export const Order = ({ orders, onChange, deleteItem }) => {
       <OrderContent>
         {orders.length ? (
           <OrderList>
-            {orders.map((order) => (
+            {orders.map((order, index) => (
               <OrderListItem
                 order={order}
-                orders={orders}
-                onChange={onChange}
                 deleteItem={deleteItem}
+                key={index}
+                index={index}
+                setOpenItem={setOpenItem}
               />
             ))}
           </OrderList>
