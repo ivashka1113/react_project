@@ -22,6 +22,7 @@ const OrderItemStyled = styled.li`
   display: flex;
   margin: 15px 0px;
   justify-content: space-between;
+  cursor: pointer;
 `;
 
 const OrderWrapper = styled.div`

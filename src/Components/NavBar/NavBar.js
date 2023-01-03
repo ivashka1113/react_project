@@ -37,20 +37,51 @@ const ButtonLogin = styled.button`
   font-weight: 700;
   color: white;
   text-decoration: none;
-  padding: 0.8em 1em calc(0.8em + 3px);
+  padding: 0.8em 1em calc(0.1em + 3px);
   border: 0px;
   background: inherit;
 `;
 
-export const NavBar = () => (
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  text-align: center;
+`;
+
+const LogOut = styled.span`
+  font-size: 20px;
+  font-weight: 700px;
+  cursor: pointer;
+  margin-right: 30px;
+`;
+
+const Figure = styled.figure`
+  margin: 0 30px;
+`;
+
+export const NavBar = ({ authentication, logIn, logOut }) => (
   <NavBarStyled>
     <Logo>
       <ImgLogo src={logoImg} alt="logo"></ImgLogo>
       <H1>Mr Donald's</H1>
     </Logo>
-    <ButtonLogin>
-      <ImgLogo src={loginImg} alt="logo"></ImgLogo>
-      <p>Login</p>
-    </ButtonLogin>
+    {authentication ? (
+      <User>
+        <Figure>
+          <ImgLogo src={loginImg} alt={authentication.displayName}></ImgLogo>
+          <figcaption>{authentication.displayName}</figcaption>
+        </Figure>
+        <LogOut title="Выйти" onClick={logOut}>
+          X
+        </LogOut>
+      </User>
+    ) : (
+      <ButtonLogin onClick={logIn}>
+        <Figure>
+          <ImgLogo src={loginImg} alt="logo"></ImgLogo>
+          <figcaption>Войти</figcaption>
+        </Figure>
+      </ButtonLogin>
+    )}
   </NavBarStyled>
 );

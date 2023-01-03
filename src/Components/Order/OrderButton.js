@@ -22,6 +22,7 @@ const OrderButtonStyled = styled.div`
 `;
 
 export const OrderButton = ({ onClickHandler }) => {
+  console.log(onClickHandler);
   return (
     <OrderButtonStyled onClick={onClickHandler}>Оплатить</OrderButtonStyled>
   );

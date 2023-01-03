@@ -16,8 +16,7 @@ const ButtonCount = styled.button`
   background: transparent;
 `;
 
-export const CountItem = ({ count, setCount, onChange, openItem, isEdit }) => {
-  if ((count === 1) & isEdit) setCount(openItem.count);
+export const CountItem = ({ count, setCount, onChange }) => {
   return (
     <CountWrapper>
       <span>Количество</span>

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { OrderButton } from "./OrderButton";
 import { OrderListItem } from "./OrderListItem";
 import {
   formatCurrency,
@@ -51,7 +50,34 @@ const EmptyList = styled.p`
   text-align: center;
 `;
 
-export const Order = ({ orders, setOrders, setOpenItem }) => {
+const OrderButton = styled.div`
+  width: 250px;
+  height: 60px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #299b01;
+  color: white;
+  border: 0;
+  transition: all 0.2s linear;
+  font-size: 18px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+      rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+      rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    transform: scale(1.05);
+  }
+`;
+
+export const Order = ({
+  orders,
+  setOrders,
+  setOpenItem,
+  authentication,
+  logIn,
+}) => {
   const deleteItem = (index) => {
     const newOrders = [...orders];
 
@@ -93,7 +119,11 @@ export const Order = ({ orders, setOrders, setOpenItem }) => {
         <span>{totalCount}</span>
         <TotalPrice>{formatCurrency(total)}</TotalPrice>
       </Total>
-      <OrderButton>Оплатить</OrderButton>
+      <OrderButton
+        onClick={() => (!authentication ? logIn() : console.log(orders))}
+      >
+        Оформить
+      </OrderButton>
     </OrderStyled>
   );
 };
